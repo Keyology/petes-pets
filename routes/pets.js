@@ -33,13 +33,32 @@ module.exports = app => {
 
   //Search FOR DOGS BY BREAD OR NAME
 
-  app.get("/search", (req, res) => {
-    term = new RegExp(req.query.term, "i");
+  // app.get("/search", (req, res) => {
+  //   term = new RegExp(req.query.term, "i");
 
-    Pet.find({ $or: [{ name: term }, { species: term }] }).exec((err, pets) => {
-      res.render("pets-index", { pets: pets });
+  //   Pet.find({ $or: [{ name: term }, { species: term }] }).exec((err, pets) => {
+  //     res.render("pets-index", { pets: pets });
+  //   });
+  // });
+
+  app.get("/search", (req, res) => {
+    const term = new RegExp(req.query.term, "i");
+
+    const page = req.query.page || 1;
+
+    Pet.paginate(
+      { $or: [{ name: term }, { species: term }] },
+      { page: page }
+    ).then(results => {
+      res.render("pets-index", {
+        pets: results.docs,
+        pageCount: results.pages,
+        currentPage: page,
+        term: req.query.term
+      });
     });
   });
+
   // EDIT PET
   app.get("/pets/:id/edit", (req, res) => {
     Pet.findById(req.params.id).exec((err, pet) => {
