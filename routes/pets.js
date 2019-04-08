@@ -12,15 +12,15 @@ module.exports = app => {
 
   // CREATE PET
   app.post("/pets", (req, res) => {
-    var pet = new Pet(req.body);
+    let pet = new Pet(req.body);
 
     pet
       .save()
       .then(pet => {
-        res.redirect(`/pets/${pet._id}`);
+        res.send({ pet: pet });
       })
       .catch(err => {
-        // Handle Errors
+        res.status(400).send(err.errors);
       });
   });
 
@@ -30,16 +30,6 @@ module.exports = app => {
       res.render("pets-show", { pet: pet });
     });
   });
-
-  //Search FOR DOGS BY BREAD OR NAME
-
-  // app.get("/search", (req, res) => {
-  //   term = new RegExp(req.query.term, "i");
-
-  //   Pet.find({ $or: [{ name: term }, { species: term }] }).exec((err, pets) => {
-  //     res.render("pets-index", { pets: pets });
-  //   });
-  // });
 
   app.get("/search", (req, res) => {
     const term = new RegExp(req.query.term, "i");
