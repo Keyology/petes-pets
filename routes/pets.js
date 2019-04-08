@@ -74,6 +74,27 @@ module.exports = app => {
     });
   });
 
+  //PURCHSE PET'S ROUTE
+
+  app.post("/pets/:id/purchase", (req, res) => {
+    console.log(req.body);
+
+    let stripe = require("stripe")(process.env.PRIVATE_STRIPE_API_KEY);
+
+    const token = req.body.stripeToken;
+
+    const charge = stripe.charges
+      .create({
+        amount: 999,
+        currency: "usd",
+        description: "Example charge",
+        source: token
+      })
+      .then(() => {
+        res.redirect(`/pets/${req.params.id}`);
+      });
+  });
+
   // SHOW PET
   app.get("/pets/:id", (req, res) => {
     Pet.findById(req.params.id).exec((err, pet) => {
