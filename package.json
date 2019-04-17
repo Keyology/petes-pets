@@ -6,6 +6,9 @@
     "start": "node ./bin/www",
     "test": "mocha"
   },
+  "engines": {
+    "node": "10.x"
+  },
   "dependencies": {
     "@sendgrid/mail": "^6.3.1",
     "body-parser": "~1.18.2",
