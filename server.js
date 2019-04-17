@@ -45,7 +45,7 @@ app.locals.PUBLIC_STRIPE_API_KEY = process.env.PUBLIC_STRIPE_API_KEY;
 // // create a mailer
 // const nodemailerMailgun = nodemailer.createTransport(mg(auth));
 
-// //SEND EMAIL
+// //SEND EMAILl
 // const user = {
 //   email: "YOUR@EMAIL.com",
 //   name: "Emily",
