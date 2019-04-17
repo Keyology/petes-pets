@@ -30,15 +30,15 @@ module.exports = app => {
     });
   });
 
-  app.get("/", (req, res) => {
-    const page = req.query.page || 1;
+  // app.get("/", (req, res) => {
+  //   const page = req.query.page || 1;
 
-    Pet.paginate({}, { page: page }).then(results => {
-      res.render("pets-index", {
-        pets: results.docs,
-        pagesCount: results.pages,
-        currentPage: page
-      });
-    });
-  });
+  //   Pet.paginate({}, { page: page }).then(results => {
+  //     res.render("pets-index", {
+  //       pets: results.docs,
+  //       pagesCount: results.pages,
+  //       currentPage: page
+  //     });
+  //   });
+  // });
 };
