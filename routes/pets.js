@@ -43,7 +43,7 @@ module.exports = app => {
   });
 
   // CREATE PET
-  app.post("/pets", upload.single("avatar"), (req, res, next) => {
+  app.post("/api/pets", upload.single("avatar"), (req, res, next) => {
     var pet = new Pet(req.body);
     pet.save(function(err) {
       if (req.file) {
@@ -96,9 +96,10 @@ module.exports = app => {
   });
 
   // SHOW PET
-  app.get("/pets/:id", (req, res) => {
+  app.get("/api/pets/:id", (req, res) => {
     Pet.findById(req.params.id).exec((err, pet) => {
-      res.render("pets-show", { pet: pet });
+      res.json({ pet: pet });
+      //"pets-show",
     });
   });
 
@@ -130,7 +131,7 @@ module.exports = app => {
   });
 
   // UPDATE PET
-  app.put("/pets/:id", (req, res) => {
+  app.put("/api/pets/:id", (req, res) => {
     Pet.findByIdAndUpdate(req.params.id, req.body)
       .then(pet => {
         res.redirect(`/pets/${pet._id}`);
@@ -141,7 +142,7 @@ module.exports = app => {
   });
 
   // DELETE PET
-  app.delete("/pets/:id", (req, res) => {
+  app.delete("/api/pets/:id", (req, res) => {
     Pet.findByIdAndRemove(req.params.id).exec((err, pet) => {
       return res.redirect("/");
     });
