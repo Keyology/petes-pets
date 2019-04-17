@@ -34,41 +34,41 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 app.locals.PUBLIC_STRIPE_API_KEY = process.env.PUBLIC_STRIPE_API_KEY;
 
-// auth with our mailgun API key and domain
-// const auth = {
-//   auth: {
-//     api_key: process.env.MAILGUN_API_KEY,
-//     domain: process.env.EMAIL_DOMAIN
-//   }
-// };
+//auth with our mailgun API key and domain
+const auth = {
+  auth: {
+    api_key: process.env.MAILGUN_API_KEY,
+    domain: process.env.EMAIL_DOMAIN
+  }
+};
 
-// // create a mailer
-// const nodemailerMailgun = nodemailer.createTransport(mg(auth));
+// create a mailer
+const nodemailerMailgun = nodemailer.createTransport(mg(auth));
 
-// //SEND EMAILl
-// const user = {
-//   email: "YOUR@EMAIL.com",
-//   name: "Emily",
-//   age: "43"
-// };
+//SEND EMAILl
+const user = {
+  email: "keonimurray99@gmail.com",
+  name: "Jack",
+  age: "22"
+};
 
-// nodemailerMailgun
-//   .sendMail({
-//     from: "no-reply@example.com",
-//     to: user.email, // An array if you have multiple recipients.
-//     subject: "Hey you, awesome!",
-//     template: {
-//       name: "email.handlebars",
-//       engine: "handlebars",
-//       context: user
-//     }
-//   })
-//   .then(info => {
-//     console.log("Response: " + info);
-//   })
-//   .catch(err => {
-//     console.log("Error: " + err);
-//   });
+nodemailerMailgun
+  .sendMail({
+    from: "no-reply@example.com",
+    to: user.email, // An array if you have multiple recipients.
+    subject: "Hey you, awesome!",
+    template: {
+      name: "email.handlebars",
+      engine: "handlebars",
+      context: user
+    }
+  })
+  .then(info => {
+    console.log("Response: " + info);
+  })
+  .catch(err => {
+    console.log("Error: " + err);
+  });
 
 require("./routes/index.js")(app);
 require("./routes/pets.js")(app);
